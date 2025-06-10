@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reportes - São João da Boa Vista</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .reportes-container {
+            max-width: 1200px;
+            margin: 100px auto 2rem;
+            padding: 0 1rem;
+        }
+
+        .filtros {
+            background: var(--white);
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+        }
+
+        .filtros-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .filtro-grupo {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .filtro-grupo label {
+            font-weight: 500;
+            color: var(--primary);
+        }
+
+        .filtro-grupo select,
+        .filtro-grupo input {
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: inherit;
+        }
+
+        .reportes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .reporte-card {
+            background: var(--white);
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            transition: var(--transition);
+        }
+
+        .reporte-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .reporte-imagem {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .reporte-conteudo {
+            padding: 1.5rem;
+        }
+
+        .reporte-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .reporte-titulo {
+            font-size: 1.2rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .reporte-data {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .reporte-descricao {
+            color: var(--text);
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        .reporte-info {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .reporte-info span {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .reporte-acoes {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid #eee;
+        }
+
+        .btn-acao {
+            flex: 1;
+            padding: 0.5rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            transition: var(--transition);
+        }
+
+        .btn-acao.ver {
+            background-color: var(--primary);
+            color: var(--white);
+        }
+
+        .btn-acao.ver:hover {
+            background-color: var(--secondary);
+        }
+
+        .btn-acao.compartilhar {
+            background-color: var(--light-gray);
+            color: var(--text);
+        }
+
+        .btn-acao.compartilhar:hover {
+            background-color: #e0e0e0;
+        }
+
+        .paginacao {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 2rem;
+        }
+
+        .pagina-btn {
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--primary);
+            border-radius: 5px;
+            background: none;
+            color: var(--primary);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .pagina-btn:hover,
+        .pagina-btn.ativa {
+            background-color: var(--primary);
+            color: var(--white);
+        }
+
+        @media (max-width: 768px) {
+            .reportes-container {
+                margin-top: 80px;
+            }
+
+            .filtros-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <img src="images/brasao.png" alt="Brasão de São João da Boa Vista">
+                <h1>São João da Boa Vista</h1>
+            </div>
+            <button class="menu-mobile">
+                <i class="fas fa-bars"></i>
+            </button>
+            <ul class="nav-links">
+                <li><a href="index.html">Início</a></li>
+                <li><a href="index.html#reportes">Reportar Problema</a></li>
+                <li><a href="index.html#enquetes">Enquetes</a></li>
+                <li><a href="index.html#acompanhamento">Acompanhamento</a></li>
+                <li><a href="sugestoes.html">Sugestões</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="hero-content">
+                <h1>Reportes da Cidade</h1>
+                <p>Acompanhe os problemas reportados e suas soluções</p>
+            </div>
+        </section>
+
+        <section class="reportes-container">
+            <div class="filtros">
+                <div class="filtros-grid">
+                    <div class="filtro-grupo">
+                        <label for="tipo">Tipo de Problema</label>
+                        <select id="tipo">
+                            <option value="">Todos</option>
+                            <option value="buraco">Buraco na Rua</option>
+                            <option value="iluminacao">Iluminação Pública</option>
+                            <option value="lixo">Coleta de Lixo</option>
+                            <option value="agua">Problemas com Água</option>
+                        </select>
+                    </div>
+                    <div class="filtro-grupo">
+                        <label for="status">Status</label>
+                        <select id="status">
+                            <option value="">Todos</option>
+                            <option value="pendente">Pendente</option>
+                            <option value="em-andamento">Em Andamento</option>
+                            <option value="resolvido">Resolvido</option>
+                        </select>
+                    </div>
+                    <div class="filtro-grupo">
+                        <label for="bairro">Bairro</label>
+                        <select id="bairro">
+                            <option value="">Todos</option>
+                            <option value="centro">Centro</option>
+                            <option value="jardim">Jardim</option>
+                            <option value="vila">Vila</option>
+                        </select>
+                    </div>
+                    <div class="filtro-grupo">
+                        <label for="data">Data</label>
+                        <input type="date" id="data">
+                    </div>
+                </div>
+            </div>
+
+            <div class="reportes-grid">
+                <div class="reporte-card">
+                    <div class="reporte-conteudo">
+                        <div class="reporte-header">
+                            <div>
+                                <h3 class="reporte-titulo">Buraco na Rua Principal</h3>
+                                <span class="reporte-data">15/03/2024</span>
+                            </div>
+                            <span class="status-badge pendente">Pendente</span>
+                        </div>
+                        <p class="reporte-descricao">Buraco grande na rua principal, próximo à praça central. Necessita reparo urgente.</p>
+                        <div class="reporte-info">
+                            <span><i class="fas fa-map-marker-alt"></i> Rua Principal, 123</span>
+                            <span><i class="fas fa-user"></i> João Silva</span>
+                        </div>
+                        <div class="reporte-acoes">
+                            <button class="btn-acao ver" onclick="verReporte(1)">
+                                <i class="fas fa-eye"></i> Ver Detalhes
+                            </button>
+                            <button class="btn-acao compartilhar" onclick="compartilharReporte(1)">
+                                <i class="fas fa-share-alt"></i> Compartilhar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="reporte-card">
+                    <div class="reporte-conteudo">
+                        <div class="reporte-header">
+                            <div>
+                                <h3 class="reporte-titulo">Lâmpada Queimada</h3>
+                                <span class="reporte-data">14/03/2024</span>
+                            </div>
+                            <span class="status-badge em-andamento">Em Andamento</span>
+                        </div>
+                        <p class="reporte-descricao">Lâmpada queimada no poste da esquina. Área escura à noite.</p>
+                        <div class="reporte-info">
+                            <span><i class="fas fa-map-marker-alt"></i> Av. São João, 456</span>
+                            <span><i class="fas fa-user"></i> Maria Santos</span>
+                        </div>
+                        <div class="reporte-acoes">
+                            <button class="btn-acao ver" onclick="verReporte(2)">
+                                <i class="fas fa-eye"></i> Ver Detalhes
+                            </button>
+                            <button class="btn-acao compartilhar" onclick="compartilharReporte(2)">
+                                <i class="fas fa-share-alt"></i> Compartilhar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="reporte-card">
+                    <div class="reporte-conteudo">
+                        <div class="reporte-header">
+                            <div>
+                                <h3 class="reporte-titulo">Vazamento de Água</h3>
+                                <span class="reporte-data">13/03/2024</span>
+                            </div>
+                            <span class="status-badge resolvido">Resolvido</span>
+                        </div>
+                        <p class="reporte-descricao">Vazamento de água na rua lateral. Já foi reparado pela equipe.</p>
+                        <div class="reporte-info">
+                            <span><i class="fas fa-map-marker-alt"></i> Rua das Flores, 789</span>
+                            <span><i class="fas fa-user"></i> Pedro Oliveira</span>
+                        </div>
+                        <div class="reporte-acoes">
+                            <button class="btn-acao ver" onclick="verReporte(3)">
+                                <i class="fas fa-eye"></i> Ver Detalhes
+                            </button>
+                            <button class="btn-acao compartilhar" onclick="compartilharReporte(3)">
+                                <i class="fas fa-share-alt"></i> Compartilhar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="paginacao">
+                <button class="pagina-btn ativa">1</button>
+                <button class="pagina-btn">2</button>
+                <button class="pagina-btn">3</button>
+                <button class="pagina-btn">Próximo</button>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Contato</h3>
+                <p><i class="fas fa-phone"></i> (19) 3634-1234</p>
+                <p><i class="fas fa-envelope"></i> contato@saojoao.sp.gov.br</p>
+                <p><i class="fas fa-map-marker-alt"></i> Praça da Matriz, 100 - Centro</p>
+            </div>
+            <div class="footer-section">
+                <h3>Horário de Atendimento</h3>
+                <p>Segunda a Sexta: 8h às 17h</p>
+                <p>Sábado: 8h às 12h</p>
+                <p>Domingo: Fechado</p>
+            </div>
+            <div class="footer-section">
+                <h3>Redes Sociais</h3>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Prefeitura de São João da Boa Vista. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html> 
